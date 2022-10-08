@@ -25,28 +25,42 @@ class PasswordController < ApplicationController
     end
   end
 
-  # POST '/users/reset'
+  # POST '/password/reset'
   def reset
     token = params[:token]
     if token.blank?
-      return render json: { error: 'Token not present'}
+      return render json: {
+        status: 'error',
+        message: 'Token cannot be blank.'
+      }, status: :ok
     end
 
     new_password = params[:password]
     if new_password.blank?
-      return render json: { error: 'Invalid new password' }
+      return render json: {
+        status: 'error',
+        message: 'Invalid new password.'
+      }, status: :ok
     end
 
     user = User.find_by(reset_password_token: token)
     if user.present? && user.password_token_valid
       if user.reset_password(params[:password])
-        render json: { status: 'ok'}, status: :ok
+        render json: {
+          status: 'success',
+          message: 'Successfully update your password'
+        }, status: :ok
       else
-        render json: { error: user.errors.full_messages }, status: :unprocessable_entity
+        return render json: {
+          status: 'error',
+          message: user.errors.full_messages.to_s
+        }, status: :ok
       end
     else
-      render json: { error: 'Link not valid or expired. Try generating a new link'}, status: :not_found
+      render json: {
+        status: 'error',
+        message: 'Link not valid or expired. Try generating a new link'
+      }, status: :ok
     end
   end
-
 end
