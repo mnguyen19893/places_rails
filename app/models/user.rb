@@ -1,13 +1,13 @@
 class User < ApplicationRecord
   has_secure_password
 
-  # validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  # validates :username, presence: true, uniqueness: true
-  validates :password, length: { minimum: 6 }
+  validates :username, presence: true, uniqueness: true
+  validates :password, length: { minimum: 6 }, confirmation: true, on: :create
 
   def generate_password_token
-    self.reset_password_token = generate_token
+    self.reset_password_token = SecureRandom.hex(4)
     self.reset_password_sent_at = Time.now.utc
     save!
   end
@@ -20,10 +20,5 @@ class User < ApplicationRecord
     self.reset_password_token = nil
     self.password = password
     save!
-  end
-
-  private
-  def generate_token
-    SecureRandom.hex(10)
   end
 end

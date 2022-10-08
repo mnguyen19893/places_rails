@@ -14,7 +14,6 @@ class AuthenticationController < ApplicationController
     else
       render json: { error: 'unauthorized'}, status: :unauthorized
     end
-
   end
 
   private

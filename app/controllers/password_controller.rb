@@ -1,19 +1,31 @@
 class PasswordController < ApplicationController
+
+  # POST '/users/forgot'
   def forgot
     if params[:email].blank?
-      return render json: { errors: 'Email is invalid' }
+      return render json: {
+        status: 'error',
+        message: 'Email is not valid.'
+      }, status: :ok
     end
 
-    user = User.find_by(email: params[:email])
+    user = User.find_by_email(params[:email])
     if user.present?
       user.generate_password_token
       UserMailer.reset_password(user).deliver_now
-      render json: { status: 'ok' }, status: :ok
+      render json: {
+        status: 'success',
+        message: 'We sent a token to your email. Please check it!',
+      }, status: :ok
     else
-      render json: { error: 'Email address not found.' }, status: :not_found
+      render json: {
+        status: 'error',
+        message: 'Email address not found.'
+      }, status: :ok
     end
   end
 
+  # POST '/users/reset'
   def reset
     token = params[:token]
     if token.blank?
@@ -35,6 +47,6 @@ class PasswordController < ApplicationController
     else
       render json: { error: 'Link not valid or expired. Try generating a new link'}, status: :not_found
     end
-
   end
+
 end
