@@ -39,6 +39,8 @@ gem "bootsnap", require: false
 
 gem 'jwt'
 gem 'bcrypt'
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+# gem 'active_model_serializers'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

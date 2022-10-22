@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorize_request, except: [:create, :login]
+  before_action :authorize_request, except: [:create, :login, :index]
   before_action :find_user, except: [:create, :index, :login]
 
   # POST users/login
@@ -33,8 +33,10 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
-    render json: @users, status: :ok
+    @users = User.all.select("id, username, email")
+    render json: {
+      data: @users
+    }, status: :ok
   end
 
   # GET /{username}
