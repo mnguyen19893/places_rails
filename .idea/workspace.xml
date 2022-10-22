@@ -2,24 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6dca5fac-31e6-4742-8c35-bb41f111d4b9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/models/place.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/type.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/user_place.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20221002193615_create_places.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20221002193634_create_types.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20221002193829_add_type_to_places.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20221002195457_add_user_to_places.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20221002195824_create_user_places.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/wonders_of_world.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/rails-jwt-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rails-jwt-api.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/migrate/20221006155646_create_users.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/migrate/20221002193614_create_users.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/schema.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/seeds.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/seeds.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,16 +25,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/Hoang/Documents/Hoang/RRC/Term5/Full-StackWebDev/Coding/demo/rails/rails-jwt-api/db",
-    "nodejs_package_manager_path": "npm",
-    "ruby.rails.projectView.checked": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/Hoang/Documents/Hoang/RRC/Term5/Full-StackWebDev/Coding/demo/rails/rails-jwt-api/db&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ruby.rails.projectView.checked&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/db" />
@@ -164,7 +151,9 @@
       <option name="presentableId" value="Default" />
       <updated>1665288377437</updated>
       <workItem from="1665288378582" duration="13758000" />
-      <workItem from="1666449145424" duration="3735000" />
+      <workItem from="1666449145424" duration="4695000" />
+      <workItem from="1666456664509" duration="6054000" />
+      <workItem from="1666468659312" duration="848000" />
     </task>
     <servers />
   </component>
