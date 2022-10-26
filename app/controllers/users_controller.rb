@@ -15,7 +15,8 @@ class UsersController < ApplicationController
           data: {
             token: token,
             expiration: time.strftime("%m-%d-%Y %H:%M"),
-            username: @user.username
+            username: @user.username,
+            id: @user.id
           }
         }, status: :ok
       end

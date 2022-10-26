@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   # Places routes
-  get 'places/index'
-  get 'places/show'
+  # get 'places/index'
+  # get 'places/show'
+  resources :places, only: [:index, :show]
+
+  get "/places/:id/like", to: "places#like", as: "company", constraints: { id: /\d+/ }
 
   # Users routes
   resources :users, param: :username
