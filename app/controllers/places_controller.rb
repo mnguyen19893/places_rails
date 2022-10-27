@@ -1,5 +1,27 @@
 class PlacesController < ApplicationController
   before_action :authorize_request
+
+  def get_type
+    @types = Type.all
+    render json: {
+      status: 'success',
+      data: @types,
+
+    }, status: :ok
+  end
+
+  def mine
+    user_id = @current_user.id
+    puts "Hoang with user_id #{user_id}"
+    @places = Place.where("user_id = ?", user_id).select("places.*, types.name as type_name, users.username as author").joins(:type).joins(:user)
+
+    render json: {
+      status: 'success',
+      data: @places,
+
+    }, status: :ok
+  end
+
   def index
     #@places = Place.includes(:user, :type).all
     # @places = Place.all
@@ -63,6 +85,29 @@ class PlacesController < ApplicationController
         }
       }, status: :ok
     end
+  end
 
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      #UserMailer.welcome_email(@user).deliver_now
+      return render json: {
+        status: 'success',
+        message: 'You are signed up',
+        data: {
+          username: @user.username,
+          email: @user.email
+        }
+      }, status: :created
+    else
+      render json: {
+        status: 'error',
+        message: @user.errors.full_messages.to_s
+      }, status: :ok
+    end
+  end
+
+  def place_params
+    params.permit(:name, :latitude, :longitude, :pictureBase64, :build_in_year, :location, :type_id)
   end
 end

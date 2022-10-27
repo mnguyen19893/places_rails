@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   # Places routes
-  # get 'places/index'
-  # get 'places/show'
-  resources :places, only: [:index, :show]
+  get "/places/:id/like", to: "places#like", as: "place_like", constraints: { id: /\d+/ }
+  get "/places/mine", to: "places#mine", as: "place_mine", constraints: {}
+  get "/places/get_type", to: "places#get_type", as: "place_get_type", constraints: {}
 
-  get "/places/:id/like", to: "places#like", as: "company", constraints: { id: /\d+/ }
+  resources :places, only: [:index, :show, :create]
+
+
 
   # Users routes
   resources :users, param: :username
