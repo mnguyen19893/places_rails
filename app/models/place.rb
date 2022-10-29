@@ -1,4 +1,6 @@
 class Place < ApplicationRecord
+  has_one_attached :image
+
   belongs_to :user
   belongs_to :type
 
@@ -6,6 +8,6 @@ class Place < ApplicationRecord
   has_many :users, through: :user_places
 
   validates :name, presence: true
-  validates :latitude, numericality: true
-  validates :longitude, numericality: true
+  # validates :latitude, numericality: true
+  # validates :longitude, numericality: true
 end

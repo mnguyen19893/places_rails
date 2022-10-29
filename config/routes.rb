@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get "/places/mine", to: "places#mine", as: "place_mine", constraints: {}
   get "/places/get_type", to: "places#get_type", as: "place_get_type", constraints: {}
 
-  resources :places, only: [:index, :show, :create]
+  resources :places, only: [:index, :show, :create, :destroy, :update]
 
 
 
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post 'password/forgot', to: 'password#forgot'
   post 'password/reset', to: 'password#reset'
 
-  get '/*a', to: 'application#not_found'
+  #get '/*a', to: 'application#not_found'
 
 
 end

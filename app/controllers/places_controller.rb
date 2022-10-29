@@ -1,5 +1,5 @@
 class PlacesController < ApplicationController
-  before_action :authorize_request
+  before_action :authorize_request, except: [:index, :show]
 
   def get_type
     @types = Type.all
@@ -12,7 +12,6 @@ class PlacesController < ApplicationController
 
   def mine
     user_id = @current_user.id
-    puts "Hoang with user_id #{user_id}"
     @places = Place.where("user_id = ?", user_id).select("places.*, types.name as type_name, users.username as author").joins(:type).joins(:user)
 
     render json: {
@@ -28,7 +27,7 @@ class PlacesController < ApplicationController
     # @places = Place.joins(:type)
     #                .select("places.*, types.name as type")
     # @places = Place.includes(:type).select("*")
-    @places = Place.select("places.*, types.name as type_name, users.username as author").joins(:type).joins(:user)
+    @places = Place.select("places.*, types.name as type_name, users.username as author").joins(:type).joins(:user).order("id DESC")
 
     render json: {
       status: 'success',
@@ -88,26 +87,93 @@ class PlacesController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
-      #UserMailer.welcome_email(@user).deliver_now
-      return render json: {
+    decoded_data = Base64.decode64(params[:image])
+    @place = Place.create(
+      name: params[:name],
+      latitude: params[:latitude],
+      longitude: params[:longitude],
+      build_in_year: params[:build_in_year],
+      location: params[:location],
+      type_id: params[:type_id],
+      user_id: @current_user.id,
+      image: {
+        io: StringIO.new(decoded_data),
+        content_type: 'image/jpeg',
+        filename: 'image.jpg'
+      }
+    )
+    @place.picture_link = url_for(@place.image)
+
+    if @place.save
+      render json: {
         status: 'success',
-        message: 'You are signed up',
-        data: {
-          username: @user.username,
-          email: @user.email
-        }
-      }, status: :created
+        message: "Successfully create a new place",
+      }, status: :ok
     else
       render json: {
         status: 'error',
-        message: @user.errors.full_messages.to_s
+        message: @place.errors.full_messages.to_s
       }, status: :ok
     end
   end
 
+  def destroy
+    @place = Place.find(params[:id])
+    if @place.valid?
+      @place.destroy
+      render json: {
+        status: 'success',
+        message: "Successfully delete the place",
+      }, status: :ok
+    else
+      render json: {
+        status: 'error',
+        message: "Cannot delete the place",
+      }, status: :ok
+    end
+  end
+
+  def update
+    @place = Place.find(params[:id])
+    if @place.valid?
+
+      decoded_data = Base64.decode64(params[:image])
+      @place.name = params[:name]
+      @place.latitude = params[:latitude]
+      @place.longitude = params[:longitude]
+      @place.build_in_year = params[:build_in_year]
+      @place.location = params[:location]
+      @place.type_id = params[:type_id]
+      @place.image.attach(
+        io: StringIO.new(decoded_data),
+        content_type: 'image/jpeg',
+        filename: 'image.jpg'
+      )
+
+      if @place.save
+        @place.picture_link = url_for(@place.image)
+        @place.save
+        render json: {
+          status: 'success',
+          message: "Successfully update a new place",
+        }, status: :ok
+      else
+        render json: {
+          status: 'success',
+          message: "Successfully create a new place",
+        }, status: :ok
+      end
+
+    else
+      render json: {
+        status: 'error',
+        message: "Cannot find the place"
+      }, status: :ok
+    end
+  end
+
+  private
   def place_params
-    params.permit(:name, :latitude, :longitude, :pictureBase64, :build_in_year, :location, :type_id)
+    params.permit(:name, :latitude, :longitude, :image, :build_in_year, :location, :type_id)
   end
 end
