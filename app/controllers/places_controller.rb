@@ -119,7 +119,7 @@ class PlacesController < ApplicationController
 
   def destroy
     @place = Place.find(params[:id])
-    if @place.valid?
+    if @place.valid? && @place.user_id == @current_user.id
       @place.user_places.destroy_all
       @place.destroy
       render json: {
