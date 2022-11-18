@@ -86,6 +86,23 @@ class PlacesController < ApplicationController
     end
   end
 
+  # Get all places are liked by the current user
+  def liked
+    #puts "Hoang: #{@current_user.email}"
+    @places = []
+    @current_user.user_places.each do |up|
+      @places << up.place
+    end
+
+
+    render json: {
+      status: 'success',
+      data: @places,
+
+    }, status: :ok
+
+  end
+
   def create
     decoded_data = Base64.decode64(params[:image])
     @place = Place.create(
