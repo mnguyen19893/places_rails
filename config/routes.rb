@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get "/places/get_type", to: "places#get_type", as: "place_get_type", constraints: {}
 
   resources :places, only: [:index, :show, :create, :destroy, :update]
+  resources :device_info, only: [:create]
 
 
 

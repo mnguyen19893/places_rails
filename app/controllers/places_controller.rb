@@ -1,3 +1,5 @@
+require 'fcm'
+
 class PlacesController < ApplicationController
   before_action :authorize_request, except: [:index, :show]
 
@@ -70,6 +72,33 @@ class PlacesController < ApplicationController
         }
       }, status: :ok
     else
+      # send a notification to the author
+      fcm = FCM.new("AAAAbmjZ818:APA91bEu7FLOJ7y4d5sa3uGdYcu4rSI7J1tSjVBjkbNC2aYUlfFVc8D8GavkNVN5Pt07UDPN6prXKDwuZKZ2ZFEcR_uKMaxasybffnfO5hlNmappyjHzQdbban4pfI1JIZRnF_xMQG-e")
+      current_username = @current_user.username
+      puts "Current user_name: #{current_username}"
+
+      place = Place.find(place_id)
+      puts "Place_id #{place.id}, author_id: #{place.user_id}"
+
+      author_id = place.user_id
+      puts "author_id: #{author_id}"
+
+      device_info = DeviceInfo.find_by_user_id(author_id)
+        #DeviceInfo.where("user_id = ?", author_id).first
+      puts "device_info #{device_info}"
+      puts "Token: #{device_info.token}"
+
+
+      registration_ids= [device_info.token] # an array of one or more client registration tokens
+
+      # See https://firebase.google.com/docs/cloud-messaging/http-server-ref for all available options.
+      options = { "notification": {
+        "title": "'#{current_username}' likes your post '#{place.name}'",
+        }
+      }
+      response = fcm.send(registration_ids, options)
+
+
       UserPlace.create(user_id: user_id, place_id: place_id)
       render json: {
         status: 'success',
